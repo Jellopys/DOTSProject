@@ -6,6 +6,11 @@ namespace DOTS
 {
     public struct UnitSpawnPoints : IComponentData
     {
-        public NativeArray<float3> Value;
+        public BlobAssetReference<UnitSpawnPointsBlob> Value;
+    }
+
+    public struct UnitSpawnPointsBlob
+    {
+        public BlobArray<float3> Value;
     }
 }

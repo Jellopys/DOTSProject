@@ -1,6 +1,6 @@
+using Unity.Entities;
 using UnityEngine;
 using Unity.Mathematics;
-using Unity.Entities;
 using Random = Unity.Mathematics.Random;
 
 namespace DOTS
@@ -11,6 +11,8 @@ namespace DOTS
         public int NumberSpawnPointsToPlace;
         public GameObject SpawnPointPrefab;
         public uint RandomSeed;
+        public GameObject UnitPrefab;
+        public float UnitSpawnRate;
     }
 
     public class GameModeBaker : Baker<GameModeMono>
@@ -23,13 +25,16 @@ namespace DOTS
             {
                 FieldDimensions = authoring.FieldDimensions,
                 NumberSpawnPointsToPlace = authoring.NumberSpawnPointsToPlace,
-                SpawnPointPrefab = GetEntity(authoring.SpawnPointPrefab, TransformUsageFlags.Dynamic)
+                SpawnPointPrefab = GetEntity(authoring.SpawnPointPrefab, TransformUsageFlags.Dynamic),
+                UnitPrefab = GetEntity(authoring.UnitPrefab, TransformUsageFlags.Dynamic),
+                UnitSpawnRate = authoring.UnitSpawnRate
             });
             AddComponent(gameModeEntity, new GameModeRandom
             {
                 Value = Random.CreateFromIndex(authoring.RandomSeed)
             });
-            AddComponent<UnitSpawnPoints>();
+            AddComponent<UnitSpawnPoints>(gameModeEntity);
+            AddComponent<UnitSpawnTimer>(gameModeEntity);
         }
     }
 }

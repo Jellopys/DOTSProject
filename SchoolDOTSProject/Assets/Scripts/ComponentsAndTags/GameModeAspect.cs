@@ -2,7 +2,6 @@ using Unity.Collections;
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
-using UnityEngine;
 
 namespace DOTS
 {
@@ -16,14 +15,15 @@ namespace DOTS
         private readonly RefRW<UnitSpawnPoints> _unitSpawnPoints;
 
         private LocalTransform Transform => _transform.ValueRO;
+        private int UnitSpawnPointCount => _unitSpawnPoints.ValueRO.Value.Value.Value.Length; // wtf syntax?
         public int NumberSpawnPointsToPlace => _gameModeProperties.ValueRO.NumberSpawnPointsToPlace;
-        public Entity SpawnPointPrefab => _gameModeProperties.ValueRO.SpawnPointPrefab;
+        public Entity SpawnPointPrefab => _gameModeProperties.ValueRO.SpawnPointPrefab;        
 
-        public NativeArray<float3> UnitSpawnPoints
+        public bool UnitSpawnPointInitialized()
         {
-            get => _unitSpawnPoints.ValueRO.Value;
-            set => _unitSpawnPoints.ValueRW.Value = value;
+            return _unitSpawnPoints.ValueRO.Value.IsCreated && UnitSpawnPointCount > 0;
         }
+
         public LocalTransform GetRandomSpawnPointTransform()
         {
             return new LocalTransform

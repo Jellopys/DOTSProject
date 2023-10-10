@@ -1,9 +1,7 @@
 using Unity.Entities;
 using Unity.Burst;
 using Unity.Collections;
-using Unity.Entities.UniversalDelegates;
 using Unity.Mathematics;
-using Unity.Transforms;
 
 namespace DOTS
 {
@@ -31,19 +29,23 @@ namespace DOTS
             var gameMode = SystemAPI.GetAspect<GameModeAspect>(gameModeEntity);
 
             var ecb = new EntityCommandBuffer(Allocator.Temp);
-            var spawnPoints = new NativeList<float3>(Allocator.Temp);
             var spawnPointOffset = new float3(0f, -2, 1);
+
+            var builder = new BlobBuilder(Allocator.Temp); // this is how you build arrays?
+            ref var spawnPoints = ref builder.ConstructRoot<UnitSpawnPointsBlob>();
+            var arrayBuilder = builder.Allocate(ref spawnPoints.Value, gameMode.NumberSpawnPointsToPlace);
 
             for (var i = 0; i < gameMode.NumberSpawnPointsToPlace; i++)
             {
                 var newSpawnPoint = ecb.Instantiate(gameMode.SpawnPointPrefab);
                 var newSpawnPointTransform = gameMode.GetRandomSpawnPointTransform();
                 ecb.SetComponent(newSpawnPoint, newSpawnPointTransform);
+
                 var newUnitSpawnPoint = newSpawnPointTransform.Position + spawnPointOffset;
-                spawnPoints.Add(newUnitSpawnPoint);
+                arrayBuilder[i] = newUnitSpawnPoint;
             }
 
-            gameMode.UnitSpawnPoints = spawnPoints.ToArray(Allocator.Persistent);
+            var blobAsset = builder.CreateBlobAssetReference<UnitSpawnPointsBlob>(Allocator.Persistent);
             ecb.Playback(state.EntityManager);
         }
     }

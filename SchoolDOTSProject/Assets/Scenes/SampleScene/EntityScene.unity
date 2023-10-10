@@ -257,6 +257,9 @@ MonoBehaviour:
   SpawnPointPrefab: {fileID: 5216423171851625868, guid: 43e0220ab2b570b40949b52a3cfcb89c,
     type: 3}
   RandomSeed: 100
+  UnitPrefab: {fileID: 80631632963963803, guid: 3834c42a82df83f4f87351480fdd39c3,
+    type: 3}
+  UnitSpawnRate: 0
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
