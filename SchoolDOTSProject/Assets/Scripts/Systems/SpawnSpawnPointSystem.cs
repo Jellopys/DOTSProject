@@ -46,6 +46,8 @@ namespace DOTS
             }
 
             var blobAsset = builder.CreateBlobAssetReference<UnitSpawnPointsBlob>(Allocator.Persistent);
+            ecb.SetComponent(gameModeEntity, new UnitSpawnPoints{Value = blobAsset});
+            builder.Dispose();
             ecb.Playback(state.EntityManager);
         }
     }

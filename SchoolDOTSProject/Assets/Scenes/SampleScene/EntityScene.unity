@@ -134,6 +134,7 @@ GameObject:
   - component: {fileID: 495801838}
   - component: {fileID: 495801840}
   - component: {fileID: 495801839}
+  - component: {fileID: 495801841}
   m_Layer: 0
   m_Name: Brain
   m_TagString: Untagged
@@ -206,6 +207,18 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 495801837}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!114 &495801841
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 495801837}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68908f8f3b70d6c488a15d48eea4a598, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1753986255
 GameObject:
   m_ObjectHideFlags: 0
@@ -259,7 +272,7 @@ MonoBehaviour:
   RandomSeed: 100
   UnitPrefab: {fileID: 80631632963963803, guid: 3834c42a82df83f4f87351480fdd39c3,
     type: 3}
-  UnitSpawnRate: 0
+  UnitSpawnRate: 3
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
