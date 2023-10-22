@@ -49,7 +49,7 @@ MonoBehaviour:
   WalkSpeed: 1
   WalkAmplitude: 1
   WalkFrequency: 2
-  AttackDamage: 1
+  AttackDamagePerSec: 1
   AttackAmplitude: 5
   AttackFrequency: 5
 --- !u!1 &1058196310250768408

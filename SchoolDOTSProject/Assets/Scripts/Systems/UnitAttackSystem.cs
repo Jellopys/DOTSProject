@@ -28,12 +28,13 @@ namespace DOTS
             var ecbSingleton = SystemAPI.GetSingleton<EndSimulationEntityCommandBufferSystem.Singleton>();
             var targetEntity = SystemAPI.GetSingletonEntity<PlayerTag>();
             var targetScale = SystemAPI.GetComponent<LocalTransform>(targetEntity).Scale;
-            var targetRadius = targetScale * 1f + 0.5f;
+            var targetRadius = targetScale * 1f + 1f;
 
             new UnitAttackJob
             {
                 DeltaTime = deltaTime,
-                targetRadiusSq = targetRadius * targetRadius,
+                TargetRadiusSq = targetRadius * targetRadius,
+                PlayerEntity = targetEntity,
                 ECB = ecbSingleton.CreateCommandBuffer(state.WorldUnmanaged).AsParallelWriter()
             }.ScheduleParallel();
         }
@@ -43,12 +44,21 @@ namespace DOTS
     public partial struct UnitAttackJob : IJobEntity
     {
         public float DeltaTime;
-        public float targetRadiusSq;
+        public Entity PlayerEntity;
+        public float TargetRadiusSq;
         public EntityCommandBuffer.ParallelWriter ECB;
 
-        private void Execute(UnitWalkAspect unit, [ChunkIndexInQuery] int sortKey)
+        private void Execute(UnitAttackAspect unit, [ChunkIndexInQuery] int sortKey)
         {
-            // unit.Attack(DeltaTime);
+            if (unit.IsInAttackRange(float3.zero, TargetRadiusSq)) // refactor this to player position
+            {
+                unit.Attack(DeltaTime, ECB, sortKey, PlayerEntity);
+            }
+            else
+            {
+                ECB.SetComponentEnabled<UnitAttackProperties>(sortKey, unit.Entity, false);
+                ECB.SetComponentEnabled<UnitWalkProperties>(sortKey, unit.Entity, true);
+            }
             
         }   
     }

@@ -5,7 +5,7 @@ namespace DOTS
 {
     public class PlayerMono : MonoBehaviour
     {
-        
+        public float PlayerHealth;
     }
 
     public class PlayerBaker : Baker<PlayerMono>
@@ -14,6 +14,8 @@ namespace DOTS
         {
             var playerEntity = GetEntity(TransformUsageFlags.Dynamic);
             AddComponent<PlayerTag>(playerEntity);
+            AddComponent(playerEntity, new PlayerHealthComponent { Health = authoring.PlayerHealth, MaxHealth = authoring.PlayerHealth });
+            AddBuffer<PlayerDamageBufferElement>(playerEntity);
         }
     }
 }

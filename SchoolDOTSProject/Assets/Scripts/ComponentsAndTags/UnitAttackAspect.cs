@@ -24,11 +24,20 @@ namespace DOTS
             set => _unitTimer.ValueRW.Value = value;
         }
 
-        private void Attack(float deltaTime)
+        public void Attack(float deltaTime, EntityCommandBuffer.ParallelWriter ecb, int sortKey, Entity playerEntity)
         {
             UnitAttackTimer += deltaTime;
             var attackAngle = AttackAmplitude * math.sin(AttackFrequency * UnitAttackTimer);
             _transform.ValueRW.Rotation = quaternion.Euler(attackAngle, Heading, 0);
+
+            var attackDamage = AttackDamagePerSecond * deltaTime;
+            var curDamage = new PlayerDamageBufferElement { Value = attackDamage };
+            ecb.AppendToBuffer(sortKey, playerEntity, curDamage);
+        }
+
+        public bool IsInAttackRange(float3 targetPosition, float targetRadiusSq)
+        {
+            return math.distancesq(targetPosition, _transform.ValueRO.Position) <= targetRadiusSq - 1;
         }
     }
 }
