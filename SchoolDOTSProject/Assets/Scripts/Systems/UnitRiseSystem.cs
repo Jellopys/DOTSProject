@@ -4,6 +4,7 @@ using Unity.Burst;
 namespace DOTS
 {
     [BurstCompile]
+    [UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
     [UpdateAfter(typeof(SpawnUnitSystem))]
     public partial struct UnitRiseSystem : ISystem
     {
@@ -24,8 +25,6 @@ namespace DOTS
         {
             var deltaTime = SystemAPI.Time.DeltaTime;
             var ecbSingleton = SystemAPI.GetSingleton<EndSimulationEntityCommandBufferSystem.Singleton>();
-
-
 
             new UnitRiseJob
             {
@@ -48,7 +47,7 @@ namespace DOTS
             if (!unit.IsAboveGround) return;
 
             unit.SetAtGroundLevel();
-            ECB.RemoveComponent<PlayerTag>(sortKey, unit.Entity);
+            ECB.RemoveComponent<StructureTag>(sortKey, unit.Entity);
             ECB.SetComponentEnabled<UnitWalkProperties>(sortKey, unit.Entity, true);
         }   
     }

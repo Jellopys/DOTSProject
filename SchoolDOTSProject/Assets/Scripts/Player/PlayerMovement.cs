@@ -1,12 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
+using Unity.Entities;
 using UnityEngine;
-using UnityEngine.Animations;
-using UnityEngine.InputSystem;
-using UnityEngine.TextCore.Text;
 
 [RequireComponent(typeof(CharacterController))]
-[RequireComponent(typeof(PlayerInput))]
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] private float movementSpeed = 5f;
@@ -15,47 +10,17 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float rotateSmoothing = 1000f;
 
     private CharacterController controller;
-    private Vector2 movement;
-    private Vector2 aim;
 
     private Vector3 playerVelocity;
 
-    private PlayerInputActions playerInputActions;
-    private PlayerInput playerInput;
 
 
     void Awake()
     {
         controller = GetComponent<CharacterController>();
-        playerInputActions = new PlayerInputActions();
-        playerInput = GetComponent<PlayerInput>();
     }
 
-    private void OnEnable()
-    {
-        playerInputActions.Enable();
-    }
-
-    private void OnDisable()
-    {
-        playerInputActions.Disable();
-        
-    }
-
-    void Update()
-    {
-        HandleInput();
-        HandleMovement();
-        HandleRotation();
-    }
-
-    void HandleInput()
-    {
-        movement = playerInputActions.Controls.Movement.ReadValue<Vector2>();
-        aim = playerInputActions.Controls.Aim.ReadValue<Vector2>();
-    }
-
-    void HandleMovement()
+    public void HandleMovement(Vector2 movement)
     {
         Vector3 move = new Vector3(movement.x, 0, movement.y);
         controller.Move(move * Time.deltaTime * movementSpeed);
@@ -65,7 +30,7 @@ public class PlayerMovement : MonoBehaviour
         controller.Move(playerVelocity * Time.deltaTime);
     }
 
-    void HandleRotation()
+    public void HandleRotation(Vector2 aim)
     {
         Ray ray = Camera.main.ScreenPointToRay(aim);
         Plane groundPlane = new Plane(Vector3.up, Vector3.zero);

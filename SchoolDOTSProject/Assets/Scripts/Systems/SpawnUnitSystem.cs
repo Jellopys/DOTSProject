@@ -22,14 +22,14 @@ namespace DOTS
         public void OnUpdate(ref SystemState state)
         {
             var deltaTime = SystemAPI.Time.DeltaTime;
-            var ecbSingleton = SystemAPI.GetSingleton<BeginInitializationEntityCommandBufferSystem.Singleton>();
-
+            var ecbParallel = SystemAPI.GetSingleton<BeginInitializationEntityCommandBufferSystem.Singleton>();
 
             new SpawnUnitJob
             {
                 DeltaTime = deltaTime,
-                ECB = ecbSingleton.CreateCommandBuffer(state.WorldUnmanaged)
-            }.Run();
+                ECB = ecbParallel.CreateCommandBuffer(state.WorldUnmanaged).AsParallelWriter()
+
+            }.ScheduleParallel();
         }
     }
 
@@ -37,22 +37,22 @@ namespace DOTS
     public partial struct SpawnUnitJob : IJobEntity
     {
         public float DeltaTime;
-        public EntityCommandBuffer ECB;
+        public EntityCommandBuffer.ParallelWriter ECB;
 
-        private void Execute(GameModeAspect gameMode)
+        private void Execute(GameModeAspect gameMode, [EntityIndexInQuery] int sortKey)
         {
             gameMode.UnitSpawnTimer -= DeltaTime;
             if (!gameMode.TimeToSpawnUnit) return;
             if (!gameMode.UnitSpawnPointInitialized()) return;
 
             gameMode.UnitSpawnTimer = gameMode.UnitSpawnRate;
-            var newUnit = ECB.Instantiate(gameMode.UnitPrefab);
+            var newUnit = ECB.Instantiate(sortKey, gameMode.UnitPrefab);
 
             var newUnitTransform = gameMode.GetUnitSpawnPoint();
-            ECB.SetComponent(newUnit, newUnitTransform);
+            ECB.SetComponent(sortKey, newUnit, newUnitTransform);
 
             var unitHeading = MathHelpers.GetHeading(newUnitTransform.Position, gameMode.Position);
-            ECB.SetComponent(newUnit, new UnitHeading { Value = unitHeading });
-        }   
+            ECB.SetComponent(sortKey,newUnit, new UnitHeading { Value = unitHeading });
+        }
     }
 }

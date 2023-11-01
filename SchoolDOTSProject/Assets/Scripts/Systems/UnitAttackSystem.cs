@@ -1,3 +1,4 @@
+using UnityEngine;
 using Unity.Entities;
 using Unity.Burst;
 using Unity.Mathematics;
@@ -6,19 +7,20 @@ using Unity.Transforms;
 namespace DOTS
 {
     [BurstCompile]
+    [UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
     [UpdateAfter(typeof(UnitWalkSystem))]
     public partial struct UnitAttackSystem : ISystem
     {
         [BurstCompile]
         public void OnCreate(ref SystemState state)
         {
-            
+
         }
 
         [BurstCompile]
         public void OnDestroy(ref SystemState state)
         {
-            
+
         }
 
         [BurstCompile]
@@ -26,7 +28,7 @@ namespace DOTS
         {
             var deltaTime = SystemAPI.Time.DeltaTime;
             var ecbSingleton = SystemAPI.GetSingleton<EndSimulationEntityCommandBufferSystem.Singleton>();
-            var targetEntity = SystemAPI.GetSingletonEntity<PlayerTag>();
+            var targetEntity = SystemAPI.GetSingletonEntity<StructureTag>();
             var targetScale = SystemAPI.GetComponent<LocalTransform>(targetEntity).Scale;
             var targetRadius = targetScale * 1f + 1f;
 
@@ -34,7 +36,7 @@ namespace DOTS
             {
                 DeltaTime = deltaTime,
                 TargetRadiusSq = targetRadius * targetRadius,
-                PlayerEntity = targetEntity,
+                StructureEntity = targetEntity,
                 ECB = ecbSingleton.CreateCommandBuffer(state.WorldUnmanaged).AsParallelWriter()
             }.ScheduleParallel();
         }
@@ -44,22 +46,23 @@ namespace DOTS
     public partial struct UnitAttackJob : IJobEntity
     {
         public float DeltaTime;
-        public Entity PlayerEntity;
+        public Entity StructureEntity;
         public float TargetRadiusSq;
         public EntityCommandBuffer.ParallelWriter ECB;
 
         private void Execute(UnitAttackAspect unit, [ChunkIndexInQuery] int sortKey)
         {
-            if (unit.IsInAttackRange(float3.zero, TargetRadiusSq)) // refactor this to player position
+            if (unit.IsInAttackRange(float3.zero, TargetRadiusSq)) 
             {
-                unit.Attack(DeltaTime, ECB, sortKey, PlayerEntity);
+                unit.Attack(DeltaTime, ECB, sortKey, StructureEntity);
             }
             else
             {
                 ECB.SetComponentEnabled<UnitAttackProperties>(sortKey, unit.Entity, false);
                 ECB.SetComponentEnabled<UnitWalkProperties>(sortKey, unit.Entity, true);
             }
-            
-        }   
+
+        }
     }
+
 }
