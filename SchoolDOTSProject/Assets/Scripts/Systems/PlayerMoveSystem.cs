@@ -7,8 +7,8 @@ using Plane = UnityEngine.Plane;
 
 namespace DOTS
 {
+    //[BurstCompile]
     [UpdateBefore(typeof(TransformSystemGroup))]
-    [BurstCompile]
     public partial struct PlayerMoveSystem : ISystem
     {
 
@@ -43,7 +43,7 @@ namespace DOTS
         }
     }
 
-    [BurstCompile]
+    //[BurstCompile]
     public partial struct MovePlayerJob : IJobEntity
     {
         public float DeltaTime;

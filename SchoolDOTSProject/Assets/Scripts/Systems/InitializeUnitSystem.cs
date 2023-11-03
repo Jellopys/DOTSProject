@@ -4,23 +4,11 @@ using Unity.Collections;
 
 namespace DOTS
 {
-    [BurstCompile]
+    //[BurstCompile]
     [UpdateInGroup(typeof(InitializationSystemGroup))]
     public partial struct InitializeUnitSystem : ISystem
     {
-        [BurstCompile]
-        public void OnCreate(ref SystemState state)
-        {
-
-        }
-
-        [BurstCompile]
-        public void OnDestroy(ref SystemState state)
-        {
-            
-        }
-
-        [BurstCompile]
+        //[BurstCompile]
         public void OnUpdate(ref SystemState state)
         {
             var ecb = new EntityCommandBuffer(Allocator.Temp);
@@ -34,7 +22,7 @@ namespace DOTS
         }
     }
 
-    [BurstCompile]
+    //[BurstCompile]
     public partial struct InitializeUnitJob : IJobEntity
     {
         public float DeltaTime;

@@ -5,9 +5,10 @@ using System.Globalization;
 
 namespace DOTS
 {
-    [BurstCompile]
+    //[BurstCompile]
     [UpdateInGroup(typeof(SimulationSystemGroup), OrderLast = true)]
     [UpdateAfter(typeof(EndSimulationEntityCommandBufferSystem))]
+    [UpdateAfter(typeof(UnitRiseSystem))]
     public partial struct ProjectileLifeTimeSystem : ISystem
     {
         [BurstCompile]
@@ -16,11 +17,12 @@ namespace DOTS
             state.RequireForUpdate<EndSimulationEntityCommandBufferSystem.Singleton>();
         }
 
-        [BurstCompile]
+        //[BurstCompile]
         public void OnUpdate(ref SystemState state)
         {
             float deltaTime = SystemAPI.Time.DeltaTime;
-            var ecbSingleton = SystemAPI.GetSingleton<EndSimulationEntityCommandBufferSystem.Singleton>();
+            var ecb = SystemAPI.GetSingleton<EndSimulationEntityCommandBufferSystem.Singleton>();
+            var ecbSingleton = SystemAPI.GetSingleton<BeginSimulationEntityCommandBufferSystem.Singleton>();
 
             new ProjectileLifeTimeJob
             {
@@ -32,7 +34,7 @@ namespace DOTS
         }
     }
 
-    [BurstCompile]
+    //[BurstCompile]
     public partial struct ProjectileLifeTimeJob : IJobEntity
     {
         public float DeltaTime;

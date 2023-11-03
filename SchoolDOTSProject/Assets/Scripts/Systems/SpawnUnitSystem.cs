@@ -3,22 +3,10 @@ using Unity.Burst;
 
 namespace DOTS
 {
-    [BurstCompile]
+    //[BurstCompile]
     public partial struct SpawnUnitSystem : ISystem
-    {
-        [BurstCompile]
-        public void OnCreate(ref SystemState state)
-        {
-
-        }
-
-        [BurstCompile]
-        public void OnDestroy(ref SystemState state)
-        {
-            
-        }
-
-        [BurstCompile]
+    { 
+        //[BurstCompile]
         public void OnUpdate(ref SystemState state)
         {
             var deltaTime = SystemAPI.Time.DeltaTime;
@@ -33,7 +21,7 @@ namespace DOTS
         }
     }
 
-    [BurstCompile]
+    //[BurstCompile]
     public partial struct SpawnUnitJob : IJobEntity
     {
         public float DeltaTime;

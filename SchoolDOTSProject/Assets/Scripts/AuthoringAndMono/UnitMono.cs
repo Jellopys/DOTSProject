@@ -36,7 +36,7 @@ namespace DOTS
             AddComponent<UnitTimer>(unitEntity);
             AddComponent<UnitHeading>(unitEntity);
             AddComponent<NewUnitTag>(unitEntity);
-            AddComponent<CollisionTag>(unitEntity);
+            //AddComponent<CollisionTag>(unitEntity);
 
         }
     }

@@ -4,16 +4,16 @@ using UnityEngine;
 
 namespace DOTS
 {
-    [BurstCompile]
+    //[BurstCompile]
     public partial struct SpawnProjectileSystem : ISystem
     {
-        [BurstCompile]
+        //[BurstCompile]
         public void OnCreate(ref SystemState state)
         {
             state.RequireForUpdate<BeginInitializationEntityCommandBufferSystem.Singleton>();
         }
 
-        [BurstCompile]
+        //[BurstCompile]
         public void OnUpdate(ref SystemState state)
         {
             foreach (var playerAspect in SystemAPI.Query<PlayerAspect>())
@@ -35,7 +35,7 @@ namespace DOTS
 
     }
 
-    [BurstCompile]
+    //[BurstCompile]
     public partial struct FireProjectileJob : IJobEntity
     {
 

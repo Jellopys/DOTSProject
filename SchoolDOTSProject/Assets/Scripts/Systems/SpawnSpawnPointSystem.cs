@@ -5,23 +5,17 @@ using Unity.Mathematics;
 
 namespace DOTS
 {
-    [BurstCompile]
+    //[BurstCompile]
     [UpdateInGroup(typeof(InitializationSystemGroup))]
     public partial struct SpawnSpawnPointSystem : ISystem
     {
-        [BurstCompile]
+        //[BurstCompile]
         public void OnCreate(ref SystemState state)
         {
             state.RequireForUpdate<GameModeProperties>();
         }
 
-        [BurstCompile]
-        public void OnDestroy(ref SystemState state)
-        {
-            
-        }
-
-        [BurstCompile]
+        //[BurstCompile]
         public void OnUpdate(ref SystemState state)
         {
             state.Enabled = false;

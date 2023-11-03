@@ -5,17 +5,16 @@ using Unity.Transforms;
 
 namespace DOTS
 {
-    [BurstCompile]
+    //[BurstCompile]
     [UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
     public partial struct ProjectileMoveSystem : ISystem
     {
-        [BurstCompile]
         public void OnCreate(ref SystemState state)
         {
             state.RequireForUpdate<BeginInitializationEntityCommandBufferSystem.Singleton>();
         }
 
-        [BurstCompile]
+        //[BurstCompile]
         public void OnUpdate(ref SystemState state)
         {
             var deltaTime = SystemAPI.Time.DeltaTime;
@@ -29,7 +28,7 @@ namespace DOTS
         }
     }
 
-    [BurstCompile]
+    //[BurstCompile]
     public partial struct ProjectileMoveJob : IJobEntity
     {
         public float DeltaTime;

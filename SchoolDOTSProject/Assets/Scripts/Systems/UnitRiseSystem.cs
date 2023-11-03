@@ -3,24 +3,12 @@ using Unity.Burst;
 
 namespace DOTS
 {
-    [BurstCompile]
+    //[BurstCompile]
     [UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
     [UpdateAfter(typeof(SpawnUnitSystem))]
     public partial struct UnitRiseSystem : ISystem
     {
-        [BurstCompile]
-        public void OnCreate(ref SystemState state)
-        {
-
-        }
-
-        [BurstCompile]
-        public void OnDestroy(ref SystemState state)
-        {
-            
-        }
-
-        [BurstCompile]
+        //[BurstCompile]
         public void OnUpdate(ref SystemState state)
         {
             var deltaTime = SystemAPI.Time.DeltaTime;
@@ -34,7 +22,7 @@ namespace DOTS
         }
     }
 
-    [BurstCompile]
+    //[BurstCompile]
     public partial struct UnitRiseJob : IJobEntity
     {
         public float DeltaTime;
@@ -49,6 +37,8 @@ namespace DOTS
             unit.SetAtGroundLevel();
             ECB.RemoveComponent<StructureTag>(sortKey, unit.Entity);
             ECB.SetComponentEnabled<UnitWalkProperties>(sortKey, unit.Entity, true);
+            ECB.RemoveComponent<UnitRiseRate>(sortKey, unit.Entity);
+            ECB.AddComponent<CollisionTag>(sortKey, unit.Entity);
         }   
     }
 }

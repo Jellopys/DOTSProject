@@ -7,15 +7,15 @@ using Unity.Burst.Intrinsics;
 
 namespace DOTS
 {
+    //[BurstCompile]
     [UpdateInGroup(typeof(InitializationSystemGroup), OrderLast = true)]
-    [BurstCompile]
     public partial class PlayerInputSystem : SystemBase
     {
 
         private PlayerInputActions _actions;
         private Entity _playerEntity;
 
-        [BurstCompile]
+        //[BurstCompile]
         protected override void OnCreate()
         {
             RequireForUpdate<PlayerTag>();
@@ -26,7 +26,7 @@ namespace DOTS
             _actions = new PlayerInputActions();
         }
 
-        [BurstCompile]
+        //[BurstCompile]
         protected override void OnStartRunning()
         {
             _actions.Enable();
@@ -34,7 +34,7 @@ namespace DOTS
             _playerEntity = SystemAPI.GetSingletonEntity<PlayerTag>();
         }
 
-        [BurstCompile]
+        //[BurstCompile]
         protected override void OnUpdate()
         {
             // Read input values
@@ -56,7 +56,7 @@ namespace DOTS
             });
         }
 
-        [BurstCompile]
+        //[BurstCompile]
         protected override void OnStopRunning()
         {
             _playerEntity = Entity.Null;

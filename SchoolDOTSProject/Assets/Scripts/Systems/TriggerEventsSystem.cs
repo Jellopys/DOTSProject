@@ -12,7 +12,7 @@ namespace DOTS
     public partial struct TriggerEventsSystem : ISystem
     {
 
-        [BurstCompile]
+        //[BurstCompile]
         public void OnCreate(ref SystemState state)
         {
             state.RequireForUpdate<EndVariableRateSimulationEntityCommandBufferSystem.Singleton>();
@@ -20,7 +20,7 @@ namespace DOTS
             state.RequireForUpdate<SimulationSingleton>();
         }
 
-        [BurstCompile]
+        //[BurstCompile]
         public void OnUpdate(ref SystemState state)
         {
             //var ecb = SystemAPI.GetSingleton<EndFixedStepSimulationEntityCommandBufferSystem.Singleton>();

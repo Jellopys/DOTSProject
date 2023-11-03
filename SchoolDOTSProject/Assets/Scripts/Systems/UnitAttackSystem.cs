@@ -6,24 +6,13 @@ using Unity.Transforms;
 
 namespace DOTS
 {
-    [BurstCompile]
+    //[BurstCompile]
     [UpdateInGroup(typeof(FixedStepSimulationSystemGroup))]
     [UpdateAfter(typeof(UnitWalkSystem))]
     public partial struct UnitAttackSystem : ISystem
     {
-        [BurstCompile]
-        public void OnCreate(ref SystemState state)
-        {
 
-        }
-
-        [BurstCompile]
-        public void OnDestroy(ref SystemState state)
-        {
-
-        }
-
-        [BurstCompile]
+        //[BurstCompile]
         public void OnUpdate(ref SystemState state)
         {
             var deltaTime = SystemAPI.Time.DeltaTime;
@@ -42,7 +31,7 @@ namespace DOTS
         }
     }
 
-    [BurstCompile]
+    //[BurstCompile]
     public partial struct UnitAttackJob : IJobEntity
     {
         public float DeltaTime;
