@@ -9,7 +9,7 @@ Left Mouse Button - Fire projectile,
 The projectiles, units and players are all Entities that are controlled by the Systems that updates each entity in various ways. 
 The components that you add to the entities are what tells the systems which entity to update or check for. These components can be enabled, disabled, added and removed. This makes it performant because its only one "Singleton actor" (the system) that iterates over all entities and executes commands to only the entities that matter. Then the jobs system takes over and executes these iterations with the use of CPU worker threads.
 
-![image](https://imgur.com/a/VlhqR55.png)
+![image](https://i.imgur.com/jlOvVDk.png)
 
 The Jobs system in DOTS allows me to make use of multithreading with job workers helping out with processing from the main thread.
 
