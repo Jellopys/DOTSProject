@@ -1,6 +1,6 @@
 # DOTSProject
 
-This project is a school assignment where we need to use Unity DOTS (ECS, Jobs, Burst) to make a performant space shooter game.
+This project is a school assignment where we need to use Unity DOTS (ECS, Jobs, Burst) to make a performant space shooter game. Using Entities was initially really difficult to grasp, a lot of the documentation I found were deprecated information and it was hard to read how the flow of the code actually works, because it's so different from the regular GameObjects way of structuring the code. However, I learned a lot and definitely saw the benefits of using entities and jobs to create scalable products. With 10.000+ entities I managed to hold a solid 120 fps still.
 
 WASD - Movement,
 Mouse - Aim & Rotate,
