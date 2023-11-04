@@ -16,7 +16,7 @@ The Jobs system in DOTS allows me to make use of multithreading with job workers
 
 ![Skärmbild 2023-11-03 222338](https://github.com/Jellopys/DOTSProject/assets/61058386/7a0b4c51-4bc6-496d-8d71-e8ca5e031e4e)
 
-You can see on the image above the Job Workers executing commands in parallel with the Main thread doing all the heavy lifting.
+You can see on the image above the Job Workers executing commands in parallel with the Main thread.
 
 ![Skärmbild 2023-11-03 222341](https://github.com/Jellopys/DOTSProject/assets/61058386/09828df0-dcb5-46d7-99cf-75b64cd5a396)
 
